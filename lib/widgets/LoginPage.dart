@@ -51,7 +51,7 @@ class _MyAppState extends State<Loginpage> {
               decoration: InputDecoration(
                 icon: Icon(Icons.lock_outline, color: Colors.white), // Changed to lock_outline
                 hintText: "PASSWORD",
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Colors.black),
               ),
               obscureText: true,
             ),
