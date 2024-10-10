@@ -2,29 +2,21 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:untitled7/pages/Homepage.dart';
-import 'package:untitled7/widgets/SignupPage.dart'; // Import the SignupPage
+import 'package:untitled7/widgets/LoginPage.dart';
 
-void main() {
-  Get.testMode = true;
-  runApp(GetMaterialApp(
-    home: Loginpage(),
-  ));
-}
-
-class Loginpage extends StatefulWidget {
-  const Loginpage({super.key});
+class Signuppage extends StatefulWidget {
+  const Signuppage({super.key});
 
   @override
-  State<Loginpage> createState() => _MyAppState();
+  State<Signuppage> createState() => _SignuppageState();
 }
 
-class _MyAppState extends State<Loginpage> {
+class _SignuppageState extends State<Signuppage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAKz3l784jmdBHJjaMNDAa1KH2lNmlnG0Y";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAKz3l784jmdBHJjaMNDAa1KH2lNmlnG0Y";
 
   Future<void> Signup() async {
     final email = _emailController.text;
@@ -40,22 +32,23 @@ class _MyAppState extends State<Loginpage> {
       }),
       headers: {'Content-Type': 'application/json'},
     );
-    final result = json.decode(res.body);
     print(res.statusCode);
 
-    if (res.statusCode == 200) {
-      Get.to(() => Homepage());
+    if (res.statusCode == 200) {Get.snackbar("SIGN UP", "SUCESSFULL",snackPosition:SnackPosition.BOTTOM,
+        colorText:Colors.white,backgroundColor:Colors.green);
+      Get.to(() => Loginpage());
     } else {
       Get.snackbar(
         "WARNING",
-        "INVALID LOGIN",
+        "INVALID SIGNUP",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
-        duration: Duration(seconds: 5),
+        duration: Duration(seconds: 2),
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +59,8 @@ class _MyAppState extends State<Loginpage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: <Color>[
-              Colors.blue?? Colors.black,
-              Colors.blue[400]!,
+              Colors.purpleAccent[800]?? Colors.purpleAccent,
+              Colors.purpleAccent[400]!,
               Colors.purpleAccent[200]!,
               Colors.purpleAccent[100]!,
             ],
@@ -106,27 +99,8 @@ class _MyAppState extends State<Loginpage> {
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               ),
               child: Text(
-                'Sign In',
+                'Sign Up',
                 style: TextStyle(color: Colors.black, fontSize: 17),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Signuppage()), // Correct this line
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.tealAccent[800],
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(color: Colors.black, fontSize: 17),
-                ),
               ),
             ),
           ],
